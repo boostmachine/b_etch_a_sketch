@@ -12,12 +12,19 @@ let btnReset = document.createElement("button");
 let btnDiv = document.querySelector(".buttonContainer");
 let grid = 32
 let width = `${16*grid}px`
+let mousedown = false
 btnAsk.className = "button";
 btnAsk.textContent = "Change Grid";
 btnReset.className = "button";
 btnReset.textContent = "Reset";
 btnDiv.appendChild(btnAsk);
 btnDiv.appendChild(btnReset);
+document.body.addEventListener("mousedown", () => {
+  mousedown = true;
+})
+document.body.addEventListener("mouseup", ()=> {
+  mousedown = false;
+})
 btnAsk.addEventListener("click", () => {
   grid = prompt("What grid you wish", "64")
   if(grid > 100) {
@@ -44,12 +51,16 @@ function gridMake(value) {
     // div.textContent = `div #${i}`;
     div.className = "box";
     div.addEventListener("mouseover", () => {
-      div.style.backgroundColor = `black`;
+      if (mousedown) {
+        div.style.backgroundColor = `black`;
+      }
+      // div.style.backgroundColor = `black`;
     });
     container.appendChild(div);
   }
   container.style.width = width
 }
+
 
 gridMake(grid)
 
